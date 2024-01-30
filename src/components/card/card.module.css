@@ -1,0 +1,49 @@
+.container{
+    margin-bottom: 50px;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+.imgContainer{
+    flex: 1;
+    height: 350px;
+    position: relative;
+}
+
+.img{
+    object-fit: cover;
+}
+
+.textContainer{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.date{
+    color: gray;
+}
+
+.category{
+    font-weight: 500;
+}
+
+.postDesc{
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--softTextColor);
+}
+
+.link{
+    width: max-content;
+    border-bottom: 1px solid crimson;
+    padding: 2px 0;
+}
+
+@media screen and (max-width: 1280px) {
+    .imgContainer{
+        display: none;
+    }
+}
