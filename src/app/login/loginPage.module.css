@@ -17,7 +17,8 @@
 .socialButton{
     padding: 20px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    gap: 10px;
     align-items: center;
     justify-content: center;
     cursor: pointer;
@@ -26,11 +27,11 @@
     border-radius: 20px;
 }
 
-.socialButton:first-child{
+/* .socialButton:first-child{
     background-color: #ff5555;
-}
+} */
 
-.socialButton:nth-child(2){
+.socialButton:first-child{
     background-color: #3c58f5;
 }
 

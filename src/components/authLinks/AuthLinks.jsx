@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const AuthLinks = () => {
   const [open, setOpen] = useState(false);
-  const status = true;
+  const status = false;
   return (
     <>
       {!status ? (

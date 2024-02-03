@@ -75,3 +75,11 @@ a {
     max-width: 475px;
   }
 }
+
+.quill > .ql-container > .ql-editor, .ql-blank::before{
+  color: #b3b3b1 !important;
+}
+
+.ql-container{
+  font-size: 25px !important;
+}
