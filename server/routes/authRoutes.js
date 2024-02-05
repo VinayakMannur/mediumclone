@@ -1,6 +1,6 @@
 const express = require("express");
 const passport = require('../middlewares/passportMiddleware')
-const { loginSuccess } = require('../controllers/authController')
+const { loginSuccess, logoutSuccess } = require('../controllers/authController')
 
 const router = express.Router();
 
@@ -18,5 +18,7 @@ router.get(
 );
 
 router.get("/login/success", loginSuccess);
+
+router.get('/logout', logoutSuccess)
 
 module.exports = router;

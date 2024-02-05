@@ -29,3 +29,13 @@ exports.loginSuccess = async (req, res) => {
     res.status(400).json({ Message: "Not Authorized" });
   }
 };
+
+exports.logoutSuccess = async (req, res)=>{
+  req.logout(function(err){
+    if(err){
+      return next(err)
+    }
+    res.redirect('http://localhost:3000')
+  })
+}
+

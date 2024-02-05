@@ -2,6 +2,10 @@
   cursor: pointer;
 }
 
+.linki {
+  cursor: pointer;
+}
+
 .burger {
   width: 20px;
   height: 16px;
@@ -31,6 +35,10 @@
     justify-content: center;
     font-size: 30px;
 
+}
+
+.profilePhoto{
+  border-radius: 50%;
 }
 
 @media screen and (max-width: 640px) {

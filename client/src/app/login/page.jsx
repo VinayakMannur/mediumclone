@@ -18,7 +18,7 @@ const LoginPage = () => {
           Sign in with Google
           </div> */}
         <div className={styles.socialButton} onClick={loginUser}>
-          <Image src="/google.png" width={35} height={35} />
+          <Image src="/google.png" alt="google" width={35} height={35} />
           <span>Sign in with Google</span>
         </div>
       </div>
