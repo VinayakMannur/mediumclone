@@ -4,12 +4,11 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
-const OAuth2Stratergy = require("passport-google-oauth2").Strategy;
-const userDB = require("./models/user");
 
 require("dotenv").config();
 
 const authRoutes = require("./routes/authRoutes");
+const categoryRoutes = require('./routes/categoryRoutes')
 
 const app = express();
 app.use(bodyParser.json({ extended: false }));
@@ -20,7 +19,6 @@ const corsOptions ={
   optionSuccessStatus:200
 }
 app.use(cors(corsOptions));
-
 
 app.use(
   session({
@@ -34,6 +32,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/", authRoutes);
+app.use(categoryRoutes)
 
 mongoose
   .connect(
