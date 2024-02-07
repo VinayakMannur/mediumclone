@@ -9,6 +9,7 @@ require("dotenv").config();
 
 const authRoutes = require("./routes/authRoutes");
 const categoryRoutes = require('./routes/categoryRoutes')
+const postRoutes = require('./routes/postRoutes')
 
 const app = express();
 app.use(bodyParser.json({ extended: false }));
@@ -33,6 +34,7 @@ app.use(passport.session());
 
 app.use("/", authRoutes);
 app.use(categoryRoutes)
+app.use(postRoutes)
 
 mongoose
   .connect(

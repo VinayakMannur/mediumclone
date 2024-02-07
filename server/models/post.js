@@ -6,11 +6,7 @@ const postSchema = new mongoose.Schema({
   desc: String,
   img: String,
   views: { type: Number, default: 0 },
-  categoryId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Category",
-    required: true,
-  },
+  category: String,
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -19,3 +15,4 @@ const postSchema = new mongoose.Schema({
 },{timestamps: true});
 
 module.exports = mongoose.model("Post", postSchema);
+// 65be47fe77a1a1fb6f765c56
