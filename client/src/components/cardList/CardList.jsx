@@ -7,7 +7,7 @@ import Card from "../card/Card";
 import axios from "axios";
 
 
-const CardList = ({page}) => {
+const CardList = ({page, cat}) => {
 
   const [data, setData] = useState([])
   const [count, setCount] = useState(0)
@@ -16,9 +16,9 @@ const CardList = ({page}) => {
   const [hasNext, setHasNext] = useState(false);
 
   const getData = async (page) =>{
-    console.log(count, 'first');
-    const response = await axios.get(`http://localhost:5000/posts?page=${page}`)
+    const response = await axios.get(`http://localhost:5000/posts?page=${page}&cat=${cat || ''}`)
     setData(response.data.posts)
+    // console.log(response.data.posts);
     setCount(response.data.count)
     updatePaginationState(page);
   }

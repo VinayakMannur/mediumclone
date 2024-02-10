@@ -20,15 +20,15 @@ const Card = ({item}) => {
           <span className={styles.date}>12.2.2023 - </span>
           <span className={styles.category}>{item.category}</span>
         </div>
-        <Link href="/" className={styles.button}>
+        <Link href={`/posts/${item._id}`} className={styles.button}>
           <h1 className={styles.postTitle}>
             {item.title}
           </h1>
         </Link>
         <p className={styles.postDesc}>
-          {item.desc}
+          {item.desc.substring(0,60)}
         </p>
-        <Link href="/" className={styles.link}>
+        <Link href={`/posts/${item._id}`} className={styles.link}>
           Read More
         </Link>
       </div>

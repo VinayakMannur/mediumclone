@@ -23,7 +23,7 @@ const CategoryList = () => {
       <h1 className={styles.title}>Popular Categories</h1>
       <div className={styles.categories}>
         {data?.map((item)=>{
-          return <Link key={item._id} href='/blog?cat=style' className={`${styles.category} ${styles[item.slug]}`}>
+          return <Link key={item._id} href={`/blog?cat=${item.slug}`} className={`${styles.category} ${styles[item.slug]}`}>
             {item.img && <Image src={item.img} className={styles.image} alt='' width={30} height={30}/>}
               {item.title}
             </Link>
