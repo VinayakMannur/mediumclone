@@ -10,15 +10,31 @@ import axios from "axios";
 const CardList = ({page}) => {
 
   const [data, setData] = useState([])
+  const [count, setCount] = useState(0)
+  const [POST_PER_PAGE] = useState(3);
+  const [hasPrev, setHasPrev] = useState(false);
+  const [hasNext, setHasNext] = useState(false);
 
-  const getData = async () =>{
+  const getData = async (page) =>{
+    console.log(count, 'first');
     const response = await axios.get(`http://localhost:5000/posts?page=${page}`)
     setData(response.data.posts)
+    setCount(response.data.count)
+    updatePaginationState(page);
   }
 
+  const updatePaginationState = (page) => {
+    setHasPrev(page > 1);
+    setHasNext((page * POST_PER_PAGE) < count);
+  };
+
   useEffect(()=>{
-    getData()
-  },[])
+    getData(page)
+  },[page, count])
+
+  const handlePageChange = (page) => {
+    getData(page);
+  };
 
   return (
     <div className={styles.container}>
@@ -29,7 +45,7 @@ const CardList = ({page}) => {
         })}
         
       </div>
-      <Pagination />
+      <Pagination handlePageChange={handlePageChange} page={parseInt(page)} hasPrev={hasPrev} hasNext={hasNext}/>
     </div>
   );
 };
