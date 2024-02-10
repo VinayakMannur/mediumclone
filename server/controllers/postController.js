@@ -31,3 +31,16 @@ exports.fetchPosts = async(req, res)=>{
         res.status(500).send('Internal Server Error')
     }
 }
+
+exports.fetchSinglePost = async(req, res) =>{
+    const id = req.params.id;
+    try {
+        
+        const posts = await Post.findById(id).populate('userId').exec()
+        return res.status(200).send({posts, Message: true})
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Internal Server Error')
+    }
+}

@@ -1,71 +1,50 @@
-import React from "react";
+'use client'
+
+import React, { useEffect, useState } from "react";
 import styles from "./singlePage.module.css";
 import Menu from "@/components/menu/Menu";
 import Image from "next/image";
 import Comments from "@/components/comments/Comments";
+import axios from "axios";
 
-const SinglePage = () => {
+const SinglePage = ({params}) => {
+
+  const id = params.slug;
+  const [data, setData] = useState([])
+
+  const getData = async (id) =>{
+    const response = await axios.get(`http://localhost:5000/posts/${id}`)
+    setData(response.data.posts)
+    console.log(response.data.posts);
+  }
+
+  useEffect(()=>{
+    getData(id)
+  },[])
+
+
   return (
     <div className={styles.conatiner}>
       <div className={styles.infoContainer}>
         <div className={styles.textContainer}>
-          <h1 className={styles.title}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur,
-            ex?
-          </h1>
+          <h1 className={styles.title}>{data.title}</h1>
           <div className={styles.user}>
             <div className={styles.userImageContainer}>
-              <Image src="/p1.jpeg" alt="" fill className={styles.userImage} />
+              {data.userId?.image && <Image src={data.userId?.image} alt="" fill className={styles.userImage} />}
             </div>
             <div className={styles.userTextContainer}>
-              <span className={styles.userName}>Vinzzz</span>
+              <span className={styles.userName}>{data.userId?.displayName}</span>
               <span className={styles.date}>12.2.2023</span>
             </div>
           </div>
         </div>
         <div className={styles.imageContainer}>
-          <Image src="/p1.jpeg" alt="" fill className={styles.image} />
+          {data.img && <Image src={data.img} alt="" fill className={styles.image} />}
         </div>
       </div>
       <div className={styles.content}>
         <div className={styles.post}>
-          <div className={styles.description}>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Laboriosam reiciendis earum incidunt totam, laudantium repudiandae
-              quod esse sint eos est!
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Laboriosam reiciendis earum incidunt totam, laudantium repudiandae
-              quod esse sint eos est!
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Laboriosam reiciendis earum incidunt totam, laudantium repudiandae
-              quod esse sint eos est!
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Laboriosam reiciendis earum incidunt totam, laudantium repudiandae
-              quod esse sint eos est!
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Laboriosam reiciendis earum incidunt totam, laudantium repudiandae
-              quod esse sint eos est!
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Laboriosam reiciendis earum incidunt totam, laudantium repudiandae
-              quod esse sint eos est!
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Laboriosam reiciendis earum incidunt totam, laudantium repudiandae
-              quod esse sint eos est!
-            </p>
-          </div>
+          <div className={styles.description} dangerouslySetInnerHTML={{__html: data?.desc}}/>
           <div className={styles.comments}>
             <Comments />
           </div>
