@@ -15,7 +15,6 @@ const SinglePage = ({params}) => {
   const getData = async (id) =>{
     const response = await axios.get(`http://localhost:5000/posts/${id}`)
     setData(response.data.posts)
-    console.log(response.data.posts);
   }
 
   useEffect(()=>{
@@ -46,7 +45,7 @@ const SinglePage = ({params}) => {
         <div className={styles.post}>
           <div className={styles.description} dangerouslySetInnerHTML={{__html: data?.desc}}/>
           <div className={styles.comments}>
-            <Comments />
+            <Comments params={params}/>
           </div>
         </div>
         <Menu />

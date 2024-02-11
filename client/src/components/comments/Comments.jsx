@@ -1,15 +1,39 @@
-import React from "react";
+'use client'
+
+import React, { useEffect, useState } from "react";
 import styles from "./comments.module.css";
 import Link from "next/link";
 import Image from "next/image";
+import useSWR from 'swr'
+import axios from "axios";
 
-const Comments = () => {
-  const status = true;
+const fetcher = async(url)=>{
+  const res = await fetch(url)
+  // console.log(res.data.comments);
+  const data = await res.json()
+
+  if(!res.ok){
+    throw new error('Something went wrong')
+  }
+
+  return data
+}
+
+const Comments = ({params}) => {
+
+  const id = params.slug
+  const [user, setUser] = useState(null);
+  
+  const {data, isLoading} = useSWR(`http://localhost:5000/comments/${id}`, fetcher)
+
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem('user')));
+  }, []);
 
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Comments</h1>
-      {status ? (
+      {user !== null ? (
         <div className={styles.write}>
           <textarea placeholder="Write a comment..." className={styles.input} />
           <button className={styles.send}>Send</button>
@@ -21,56 +45,19 @@ const Comments = () => {
       )}
 
       <div className={styles.comments}>
-        <div className={styles.comment}>
-            <div className={styles.user}>
-                <Image src='/p1.jpeg' width={50} height={50} className={styles.image}/>
-                <div className={styles.userInfo}>
-                    <span className={styles.userName}>vinzz</span>
-                    <span className={styles.date}>12.2.2322</span>
-                </div>
-            </div>
-            <p className={styles.desc}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil odit debitis tenetur.</p>
-        </div>
-        <div className={styles.comment}>
-            <div className={styles.user}>
-                <Image src='/p1.jpeg' width={50} height={50} className={styles.image}/>
-                <div className={styles.userInfo}>
-                    <span className={styles.userName}>vinzz</span>
-                    <span className={styles.date}>12.2.2322</span>
-                </div>
-            </div>
-            <p className={styles.desc}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil odit debitis tenetur.</p>
-        </div>
-        <div className={styles.comment}>
-            <div className={styles.user}>
-                <Image src='/p1.jpeg' width={50} height={50} className={styles.image}/>
-                <div className={styles.userInfo}>
-                    <span className={styles.userName}>vinzz</span>
-                    <span className={styles.date}>12.2.2322</span>
-                </div>
-            </div>
-            <p className={styles.desc}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil odit debitis tenetur.</p>
-        </div>
-        <div className={styles.comment}>
-            <div className={styles.user}>
-                <Image src='/p1.jpeg' width={50} height={50} className={styles.image}/>
-                <div className={styles.userInfo}>
-                    <span className={styles.userName}>vinzz</span>
-                    <span className={styles.date}>12.2.2322</span>
-                </div>
-            </div>
-            <p className={styles.desc}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil odit debitis tenetur.</p>
-        </div>
-        <div className={styles.comment}>
-            <div className={styles.user}>
-                <Image src='/p1.jpeg' width={50} height={50} className={styles.image}/>
-                <div className={styles.userInfo}>
-                    <span className={styles.userName}>vinzz</span>
-                    <span className={styles.date}>12.2.2322</span>
-                </div>
-            </div>
-            <p className={styles.desc}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil odit debitis tenetur.</p>
-        </div>
+        {isLoading?"Loading": data?.comments.map((item)=>{
+          return <div className={styles.comment}>
+              <div className={styles.user}>
+                  {item.userId.image && <Image src={item?.userId?.image} alt="" width={50} height={50} className={styles.image}/>}
+                  <div className={styles.userInfo}>
+                      <span className={styles.userName}>{item.userId.displayName}</span>
+                      <span className={styles.date}>{item.userId.createdAt.substring(0,10)}</span>
+                  </div>
+              </div>
+              <p className={styles.desc}>{item.desc}</p>
+          </div>
+        })}
+        
       </div>
     </div>
   );

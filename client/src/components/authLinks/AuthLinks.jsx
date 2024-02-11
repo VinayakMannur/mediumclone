@@ -17,6 +17,7 @@ const AuthLinks = () => {
       const respose = await axios.get('http://localhost:5000/login/success',{withCredentials:true})
       setStatus(true)
       setUserData(respose.data.user)
+      localStorage.setItem('user', JSON.stringify(respose.data.user))
 
     } catch (error) {
       console.log(error);
@@ -26,6 +27,7 @@ const AuthLinks = () => {
   const logoutUser = () =>{
     window.open('http://localhost:5000/logout', "_self")
     setUserData({})
+    localStorage.removeItem('user')
     setStatus(false)
   }
 
