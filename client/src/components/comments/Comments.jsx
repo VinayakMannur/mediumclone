@@ -23,8 +23,16 @@ const Comments = ({params}) => {
 
   const id = params.slug
   const [user, setUser] = useState(null);
+  const [desc, setDesc] = useState("")
   
-  const {data, isLoading} = useSWR(`http://localhost:5000/comments/${id}`, fetcher)
+  const {data, mutate, isLoading} = useSWR(`http://localhost:5000/comments/${id}`, fetcher)
+
+  const handleSubmit = async()=>{
+    const respose = await axios.post(`http://localhost:5000/addComment/${id}`,{desc, withCredentials:true})
+    console.log(respose);
+    mutate()
+  }
+  
 
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('user')));
@@ -35,8 +43,8 @@ const Comments = ({params}) => {
       <h1 className={styles.title}>Comments</h1>
       {user !== null ? (
         <div className={styles.write}>
-          <textarea placeholder="Write a comment..." className={styles.input} />
-          <button className={styles.send}>Send</button>
+          <textarea placeholder="Write a comment..." className={styles.input} onChange={e=> setDesc(e.target.value)}/>
+          <button className={styles.send} onClick={handleSubmit}>Send</button>
         </div>
       ) : (
         <div>

@@ -4,6 +4,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
+const cookieParser = require("cookie-parser");
 
 require("dotenv").config();
 
@@ -13,6 +14,7 @@ const postRoutes = require('./routes/postRoutes')
 const commentRoute = require('./routes/commentRoutes')
 
 const app = express();
+app.use(cookieParser());
 app.use(bodyParser.json({ extended: false }));
 app.use(cors());
 const corsOptions ={
